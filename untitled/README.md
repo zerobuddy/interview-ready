@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Untitled — Rolling Holiday Calendar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A small React app that displays a three-month calendar and a rolling list of holidays for a selected country.
 
-## Available Scripts
+Built with Create React App and dayjs. The app fetches public holiday data from the free Nager.Date API and shows which weeks contain work-affecting holidays.
 
-In the project directory, you can run:
+Key features
+- Three-month calendar view with previous/next navigation (`src/components/CalendarThreeMonth.js`).
+- Individual month rendering with day cells and week indicators (`src/components/MonthView.jsx`).
+- Rolling holidays panel that fetches and normalizes holiday data for ±11 months (`src/components/HolidayView.js`, `src/services/holidayService.js`, `src/services/holidayNormalizer.js`).
+- Simple in-memory caching of API results and prioritization of work-related holiday types (`src/services/holidayPriority.js`).
 
-### `npm start`
+Prerequisites
+- Node.js (LTS recommended) and npm (bundled with Node.js).
+- Windows users: PowerShell is the default dev shell for this repo.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Quick start
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Install dependencies
 
-### `npm test`
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Run the dev server (PowerShell example)
 
-### `npm run build`
+```powershell
+# start on a different port (optional)
+$env:PORT=3001; npm start
+# or default
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Open http://localhost:3000 in your browser.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Available scripts
+- `npm start` — start development server with hot reload
+- `npm test` — run tests (Jest + React Testing Library)
+- `npm run build` — create production build in `build/`
+- `npm run eject` — eject CRA configuration (one-way)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Project structure (important files)
+- `public/` — static assets and `index.html`
+- `src/index.js` — app entry
+- `src/App.js` — root component that wires the calendar and holiday panel
+- `src/components/CalendarThreeMonth.js` — three-month navigation and rendering
+- `src/components/MonthView.jsx` — month grid and day rendering
+- `src/components/HolidayView.js` — fetches and renders rolling holidays
+- `src/services/holidayService.js` — fetches holidays from the API and caches results
+- `src/services/holidayNormalizer.js` — normalizes API payloads and filters by date range
+- `src/services/holidayPriority.js` — determines whether a holiday is work-affecting
+- `src/hooks/useApi.js` — small reusable hook for cancellable API calls
+- `src/utils/weekIndicators.js` — (utility for week computation)
 
-### `npm run eject`
+API details
+- Default API: https://date.nager.at/api/v3
+- `src/services/holidayService.js` requests public holidays for the previous, current, and next year to build a rolling window.
+- Results are normalized and filtered to approximately ±11 months around the current date.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Caching and behavior notes
+- A simple in-memory `Map` (`holidayCache`) caches responses per country for the lifetime of the page.
+- `holidayNormalizer` will keep one holiday per date and prefer holidays classified as work-affecting when multiple entries exist for the same date.
+- If you need to change the API base URL, modify `API_BASE` in `src/services/holidayService.js`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Testing
+- Basic tests are present (see `src/App.test.js`). Run them with `npm test`.
+- The project uses Jest and React Testing Library (as provided by CRA).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Building & Deployment
+- Build:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm run build
+```
 
-## Learn More
+- Deploy the contents of the `build/` folder to any static hosting (Netlify, Vercel, GitHub Pages, IIS, S3, etc.).
+- If you want GitHub Pages, consider the `gh-pages` package or follow CRA deployment docs.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Troubleshooting
+- If port 3000 is in use, set `PORT` before starting (PowerShell example above).
+- Holiday API failures: the app logs fetch errors to the console and shows a friendly message in the UI. The free Nager.Date service may rate limit or temporarily fail.
+- To force-refresh cached holidays during development, refresh the page or restart the dev server (the cache is in-memory only).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Contributing
+- Open issues and PRs. Keep changes focused and include tests where appropriate.
+- The codebase follows common CRA conventions — place new components under `src/components` and services under `src/services`.
 
-### Code Splitting
+License
+- No license is specified. Add a `LICENSE` file or specify a license in `package.json` if you want one.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Notes and next steps (optional improvements)
+- Extract `API_BASE` to an environment variable like `REACT_APP_API_BASE` for easier configuration.
+- Add visual indicators or tooltips to explain week-level holiday counts in the calendar.
+- Add unit tests for `holidayNormalizer` and `holidayService` to lock in expected behavior.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+Generated by the project maintainer's tooling; please edit the project title, license, or screenshots as desired.
