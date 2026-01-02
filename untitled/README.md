@@ -1,5 +1,11 @@
 # Untitled — Rolling Holiday Calendar
 
+<!-- Add project screenshot -->
+
+![Rolling Holiday Calendar screenshot](./img.png)
+
+_A sample screenshot of the app UI (three-month calendar + holiday panel)._
+
 A small React app that displays a three-month calendar and a rolling list of holidays for a selected country.
 
 Built with Create React App and dayjs. The app fetches public holiday data from the free Nager.Date API and shows which weeks contain work-affecting holidays.
