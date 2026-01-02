@@ -1,0 +1,110 @@
+.app {
+  width: 380px;
+  background: #020617;
+  color: white;
+  font-family: system-ui;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  font-size: 12px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.panel {
+  padding: 8px;
+  font-size: 11px;
+}
+
+.holiday-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.holiday-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px dashed #1e293b;
+}
+
+.error {
+  color: #f87171;
+}
+
+
+.calendar-root {
+  width: 380px;
+  background: #0f172a;
+  color: white;
+  font-family: system-ui;
+  padding: 8px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.months {
+  display: flex;
+  gap: 6px;
+}
+
+.month {
+  flex: 1;
+  background: #020617;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.month-title {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 10px;
+  text-align: center;
+}
+
+.day {
+  padding: 4px 0;
+  border-radius: 4px;
+}
+
+.muted {
+  opacity: 0.3;
+}
+
+.today {
+  background: #2563eb;
+  font-weight: bold;
+}
+.holiday {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.work-holiday {
+  background: rgba(220, 38, 38, 0.25); /* red */
+  border-left: 3px solid #dc2626;
+  font-weight: 600;
+}
+
+.regular-holiday {
+  background: rgba(234, 179, 8, 0.2); /* yellow */
+  border-left: 3px solid #eab308;
+}
