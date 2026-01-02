@@ -87,13 +87,6 @@ Troubleshooting
 - Holiday API failures: the app logs fetch errors to the console and shows a friendly message in the UI. The free Nager.Date service may rate limit or temporarily fail.
 - To force-refresh cached holidays during development, refresh the page or restart the dev server (the cache is in-memory only).
 
-Contributing
-- Open issues and PRs. Keep changes focused and include tests where appropriate.
-- The codebase follows common CRA conventions — place new components under `src/components` and services under `src/services`.
-
-License
-- No license is specified. Add a `LICENSE` file or specify a license in `package.json` if you want one.
-
 Notes and next steps (optional improvements)
 - Extract `API_BASE` to an environment variable like `REACT_APP_API_BASE` for easier configuration.
 - Add visual indicators or tooltips to explain week-level holiday counts in the calendar.
